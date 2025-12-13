@@ -5,11 +5,11 @@ export const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
 
-    const [ok, setok] = useState("context is in working ..")
+    const [ok , setok] = useState(false)
 
 
     return (
-        <AppContext.Provider value={{ok}} >
+        <AppContext.Provider value={{ ok }} >
             {children}
         </AppContext.Provider>
     )
