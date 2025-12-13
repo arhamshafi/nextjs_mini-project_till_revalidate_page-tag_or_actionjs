@@ -4,6 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { signup } from './action';
 
 
 export const dynamic = "force-dynamic"
@@ -48,16 +49,19 @@ export default function page() {
         }
         if (password !== confirmpassword) {
             toast.error("Password is Not Matched")
-            setformdata({ ...formdata, password: "" })
-            setformdata({ ...formdata, confirmpassword: "" })
+            setformdata({ ...formdata, password: "", confirmpassword: "" })
             passRef.current.focus()
-            console.log(formdata);
+            
             return
         }
         try {
 
             setlaoder(true)
-            console.log(formdata);
+            const res = await signup(formdata)
+            const data = JSON.parse(res)
+            console.log(data);
+
+            // yhan sy pending h a
 
 
         } catch (err) {
