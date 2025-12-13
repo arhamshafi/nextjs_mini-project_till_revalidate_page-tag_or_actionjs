@@ -9,13 +9,13 @@ import { FaUserCircle } from "react-icons/fa";
 
 export default function Navbar() {
 
-    const [profilebar, setProfileBar] = useState(true)
+    const [profilebar, setProfileBar] = useState(false)
     const pathname = usePathname()
     const profileRef = useRef(null)
     const router = useRouter()
     const { data: session, status } = useSession()
-    console.log(session);
-    console.log(status);
+    // console.log(session);
+    // console.log(status);
 
 
     const { ok } = useContext(AppContext)
