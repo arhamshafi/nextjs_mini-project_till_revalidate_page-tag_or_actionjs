@@ -52,7 +52,7 @@ export default function Navbar() {
                 <FaUserCircle className='text-blue-500 text-2xl ml-2 cursor-pointer' onClick={() => setProfileBar(true)} />
             </div>
             {/* /////////// */}
-            <div ref={profileRef} className={`w-[400px] h-max py-3 rounded-2xl bg-white fixed top-24 flex flex-col transition-all duration-300 ease-in-out items-center ${profilebar ? "right-2 visible opacity-100 " : " right-[-25%] opacity-0 invisible"} `}>
+            <div ref={profileRef} className={`w-100 h-max py-3 rounded-2xl bg-white fixed top-24 flex flex-col transition-all duration-300 ease-in-out items-center ${profilebar ? "right-2 visible opacity-100 " : " right-[-25%] opacity-0 invisible"} `}>
                 <h1 className='text-black text-2xl font-bold uppercase ' >Profile</h1>
                 <FaUserCircle className='text-black text-5xl mt-5' />
                 <p className='text-black w-3/4 mt-5 font-bold'>NAME : <span className='text-black/60 font-light ml-5'>{status === "unauthenticated" ? "--/--/--" : "user"}</span> </p>
