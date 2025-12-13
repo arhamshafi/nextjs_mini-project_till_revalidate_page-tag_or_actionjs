@@ -13,15 +13,15 @@ export default function NOTFOUND() {
     return (
         <div className='w-full min-h-screen flex flex-col relative justify-center items-center gap-5 text-black'>
             <p className='font-bold text-2xl'>Error 404: This Route Drifted Off Orbit</p>
-            <p>Let’s Take You Back Home</p>
+            <p className='animate-pulse text-lg '>Let’s Take You Back Home</p>
 
             <button
                 onClick={goHome}
                 className='px-5 cursor-pointer py-2 bg-black text-white rounded-lg '
             >
-                Home
+                Click Here
             </button>
-            <img src='/minions.png' className='absolute bottom-0 left-0 w-[300px] h-[300px] ' />
+            <img src='/minions.png' className='absolute bottom-0 left-0 w-4/12 h-7/12 ' />
         </div>
     );
 }
