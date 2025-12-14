@@ -11,7 +11,7 @@ export default function MainWrapper({ children, session }) {
             <AppProvider>
                 <ToastContainer
                     position="top-center"
-                    autoClose={1500}
+                    autoClose={1200}
                     closeOnClick
                     pauseOnHover
                     draggable

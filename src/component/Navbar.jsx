@@ -1,6 +1,6 @@
 "use client"
 import { AppContext } from '@/context/context';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -14,7 +14,7 @@ export default function Navbar() {
     const profileRef = useRef(null)
     const router = useRouter()
     const { data: session, status } = useSession()
-    // console.log(session);
+    // console.log(session.user);
     // console.log(status);
 
 
@@ -48,15 +48,20 @@ export default function Navbar() {
                         })
                     }
                 </ul>
-                <FaCrown className='text-yellow-400 text-2xl ml-5 cursor-pointer' />
-                <FaUserCircle className='text-blue-500 text-2xl ml-2 cursor-pointer' onClick={() => setProfileBar(true)} />
+                {
+                    session?.user?.role === "admin" && (
+                        <FaCrown className='text-yellow-400 text-2xl ml-5 cursor-pointer' />
+                    )
+                }
+                <FaUserCircle className={`text-blue-500 text-2xl ${session?.user?.role == "admin" ? "ml-2" : "ml-5"} cursor-pointer`} onClick={() => setProfileBar(true)} />
             </div>
             {/* /////////// */}
             <div ref={profileRef} className={`w-100 h-max py-3 rounded-2xl bg-white fixed top-24 flex flex-col transition-all duration-300 ease-in-out items-center ${profilebar ? "right-2 visible opacity-100 " : " right-[-25%] opacity-0 invisible"} `}>
                 <h1 className='text-black text-2xl font-bold uppercase ' >Profile</h1>
                 <FaUserCircle className='text-black text-5xl mt-5' />
-                <p className='text-black w-3/4 mt-5 font-bold'>NAME : <span className='text-black/60 font-light ml-5'>{status === "unauthenticated" ? "--/--/--" : "user"}</span> </p>
-                <p className='text-black w-3/4 mt-2 font-bold'>E-MAIL : <span className='text-black/60 font-light ml-5'>{status === "unauthenticated" ? "--/--/--" : "user"}</span> </p>
+                <p className='text-black w-3/4 mt-5 font-bold'>NAME : <span className='text-black/60 font-light ml-5 capitalize '>{status === "unauthenticated" ? "--/--/--" : `${session?.user.name}`}</span> </p>
+                <p className='text-black w-3/4 mt-2 font-bold'>E-MAIL : <span className='text-black/60 font-light ml-5'>{status === "unauthenticated" ? "--/--/--" : `${session?.user.email}`}</span> </p>
+                <p className='text-black w-3/4 mt-2 font-bold'>ROLE : <span className='text-black/60 font-light ml-5 capitalize '>{status === "unauthenticated" ? "--/--/--" : `${session?.user.role}`}</span> </p>
                 <div className='w-[80%] h-max flex justify-center items-center gap-5 mt-5'>
                     {
                         status === "unauthenticated" ? (
@@ -65,7 +70,7 @@ export default function Navbar() {
                                 <button className='w-[45%] h-12 bg-black cursor-pointer active:bg-black/80 rounded-xl' onClick={() => router.push("/signup")} >SIGN UP</button>
                             </>
                         ) : (
-                            <button className='bg-black w-full rounded-xl h-12 cursor-pointer active:bg-black/70 hover:shadow-xl ' >LOGOUT</button>
+                            <button className='bg-black w-full rounded-xl h-12 cursor-pointer active:bg-black/70 hover:shadow-xl ' onClick={() => signOut()} >LOGOUT</button>
                         )
                     }
                 </div>

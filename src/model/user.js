@@ -20,12 +20,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password Must Be Required"],
         minlength: [6, "Password Must Be 6 Digit"],
-        validate: {
-            validator: function (value) {
-                return /[A-Z]/.test(value);
-            },
-            message: "Password must contain at least one capital letter",
-        },
+        select: false,
     },
 
     role: {
@@ -41,12 +36,17 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-UserSchema.pre("save", async function() {
-    if (!this.isModified("password")) return 
+UserSchema.pre("save", async function () {
+    if (!this.isModified("password")) return
     const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password, salt);
-    
+
 });
 
+UserSchema.methods.comparePassword = async function (pass) {
+  return bcrypt.compare(pass, this.password);
+};
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+export default User;

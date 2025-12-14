@@ -5,6 +5,7 @@ import { FaApple } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { signup } from './action';
+import { signIn } from 'next-auth/react';
 
 
 export const dynamic = "force-dynamic"
@@ -51,7 +52,7 @@ export default function page() {
             toast.error("Password is Not Matched")
             setformdata({ ...formdata, password: "", confirmpassword: "" })
             passRef.current.focus()
-            
+
             return
         }
         try {
@@ -59,10 +60,21 @@ export default function page() {
             setlaoder(true)
             const res = await signup(formdata)
             const data = JSON.parse(res)
-            console.log(data);
+            if (!data.success) throw new Error(data.message)
+            toast.success(data.message)
 
-            // yhan sy pending h a
-
+            const autosignin = await signIn("credentials", {
+                email: formdata.email,
+                password: formdata.password,
+                redirect: false
+            })
+            if (autosignin?.error) throw new Error("Authentication Error")
+            setformdata({ name: "", email: "", password: "", confirmpassword: "" })
+            nameRef.current?.blur()
+            emailRef.current?.blur()
+            passRef.current?.blur()
+            conpassRef.current?.blur()
+            setTimeout(() => router.push("/"), 1800)
 
         } catch (err) {
             toast.error(err.message || "Invalid Error")

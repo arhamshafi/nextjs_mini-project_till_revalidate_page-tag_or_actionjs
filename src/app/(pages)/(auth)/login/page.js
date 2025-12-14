@@ -4,11 +4,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { signIn } from 'next-auth/react';
 
 export const dynamic = "force-dynamic"
 export default function page() {
-    const router = useRouter()
 
+    const router = useRouter()
     const [loader, setlaoder] = useState(false)
     const [formdata, setformdata] = useState({ email: "", password: "" })
     const emailRef = useRef(null)
@@ -35,12 +36,21 @@ export default function page() {
             return
         }
 
-
         try {
 
             setlaoder(true)
-            console.log(formdata);
+            const res = await signIn("credentials", {
+                email: formdata.email,
+                password: formdata.password,
+                redirect: false
+            })
 
+            if (res?.error) throw new Error("Authentication Error")
+            toast.success("Successfully Logged ")
+            setformdata({ email: "", password: "" })
+            emailRef.current.blur()
+            passRef.current.blur()
+            setTimeout(() => router.push("/"), 1800)
 
         } catch (err) {
             toast.error(err.message || "Invalid Error")
@@ -48,7 +58,6 @@ export default function page() {
             setlaoder(false)
         }
     }
-
 
     return (
         <div className='w-full min-h-screen flex justify-center items-center bg-black'>

@@ -10,7 +10,7 @@ export const signup = async (userdata) => {
         const existinguser = await user.findOne({ email: userdata.email })
         if (existinguser) throw new Error("This E-Mail is Already Used")
         const newUser = await user.create({ name: userdata.name, email: userdata.email, password: userdata.password })
-        console.log(newUser);
+        // console.log(newUser);
         return JSON.stringify({ success: true, message: "successfully Registerd" })
 
     } catch (err) {
