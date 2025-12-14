@@ -6,10 +6,10 @@ const Loader = () => {
   return (
     <div className='w-full min-h-screen bg-white flex flex-col justify-center items-center'>
 
-    <StyledWrapper>
-      <div className="loader" />
-    </StyledWrapper>
-    <p className='text-black font-bold tracking-[2px] mt-6 animate-pulse text-2xl '>LOADING</p>
+      <StyledWrapper>
+        <div className="loader" />
+      </StyledWrapper>
+      <p className='text-black font-bold tracking-[2px] mt-6 animate-pulse text-2xl '>LOADING</p>
     </div>
   );
 }

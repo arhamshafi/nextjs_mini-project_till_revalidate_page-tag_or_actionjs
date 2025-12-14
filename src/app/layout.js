@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MainWrapper from "@/context/MainWrapper";
 import { getServerSession } from "next-auth";
+import ToastProvider from "@/component/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased select-none scrollbar-hide `}
       >
+        <ToastProvider/>
         <MainWrapper session={session} >
           {children}
         </MainWrapper>

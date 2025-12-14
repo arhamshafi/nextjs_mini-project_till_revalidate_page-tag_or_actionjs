@@ -5,6 +5,7 @@ import React from 'react'
 import { RiAlarmWarningLine } from "react-icons/ri";
 
 import StudentData from '@/component/StudentData';
+import StudentAddBtn from '@/component/StudentAddBtn';
 
 export const metadata = {
   title: "CRUD Operation | action.js "
@@ -14,6 +15,7 @@ export default async function page() {
   await ConnectDB()
   const std = await Student.find({}) || []
   const session = await getServerSession()
+  
   if (!session) return <div className='w-full min-h-screen bg-purple-700 pt-12  px-10 ' >
     <p className='text-center text-4xl tracking-[2px] mt-15 font-bold '>Students Data</p>
     <div className='w-full h-12 bg-white mt-10 rounded-xl flex items-center font-normal justify-between px-5'>
@@ -26,12 +28,9 @@ export default async function page() {
     </div>
     <RiAlarmWarningLine className=' text-red-500 text-5xl mx-auto scale-140 mt-30  ' />
     <p className='text-center mt-5 text-2xl text-white/50 '>Authentication Required</p>
-
-
   </div>
 
-
-  return (
+return (
     <div className='w-full min-h-screen bg-purple-700 pt-12  px-10'>
       <p className='text-center text-4xl tracking-[2px] mt-15 font-bold '>Students Data</p>
       <div className='w-full h-12 bg-white mt-10 rounded-xl flex items-center font-normal justify-between px-5'>
@@ -63,9 +62,7 @@ export default async function page() {
         }
 
       </div>
-
-      <button className='fixed bottom-8 right-8 bg-black text-2xl py-2 rounded-2xl px-8 text-white active:bg-black/90 cursor-pointer active:scale-95 transition-all duration-100 ease-linear '>ADD</button>
-
+      <StudentAddBtn />
     </div>
   )
 }

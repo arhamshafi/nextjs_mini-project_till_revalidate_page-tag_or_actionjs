@@ -21,7 +21,7 @@ export default function NOTFOUND() {
             >
                 Click Here
             </button>
-            <img src='/minions.png' className='absolute bottom-0 left-0 w-4/12 h-7/12 ' />
+            <img src='/minions.png' className='absolute bottom-0 left-0 w-50 h-7/12 ' />
         </div>
     );
 }
