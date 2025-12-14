@@ -26,7 +26,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none scrollbar-hide `}
       >
         <MainWrapper session={session} >
           {children}

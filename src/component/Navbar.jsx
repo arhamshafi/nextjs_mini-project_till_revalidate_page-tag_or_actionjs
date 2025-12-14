@@ -40,7 +40,7 @@ export default function Navbar() {
             <div className=' flex justify-center items-center'>
                 <ul className='w-max h-max flex justify-center items-center gap-5 text-black '>
                     {
-                        ["home", "services", "todo", "contact"].map((ele, idx) => {
+                        ["home", "services", "data", "contact"].map((ele, idx) => {
                             const link = ele == "home" ? "/" : `/${ele}`
                             return (
                                 <Link key={idx} href={link} > <li className={` ${pathname == link && "text-green-400"} capitalize  `}>{ele}</li> </Link>
