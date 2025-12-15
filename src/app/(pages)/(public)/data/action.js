@@ -8,9 +8,9 @@ import { getServerSession } from "next-auth"
 
 
 export const del = async (id) => {
-    const session = await getServerSession(AuthOption)
-    if (session.user.role !== "admin") throw new Error("Only Admin Actions")
     try {
+        const session = await getServerSession(AuthOption)
+        if (session?.user?.role !== "admin") throw new Error("Only Admin Actions")
         await ConnectDB()
         const objId = new mongoose.Types.ObjectId(id)
         const res = await Student.deleteOne({ _id: objId })
@@ -24,9 +24,9 @@ export const del = async (id) => {
 }
 
 export const add = async (data) => {
-    const session = await getServerSession(AuthOption)
-    if (session.user.role !== "admin") throw new Error("Only Admin Actions")
     try {
+        const session = await getServerSession(AuthOption)
+        if (session?.user?.role !== "admin") throw new Error("Only Admin Actions")
         await ConnectDB()
 
         const res = await Student.create({
@@ -39,6 +39,6 @@ export const add = async (data) => {
         return JSON.stringify({ success: true, message: "Successfully Created" })
 
     } catch (err) {
-        return JSON.stringify({ sucess: false, message: err.message || "Server Error" })
+        return JSON.stringify({ success: false, message: err.message || "Server Error" })
     }
 }

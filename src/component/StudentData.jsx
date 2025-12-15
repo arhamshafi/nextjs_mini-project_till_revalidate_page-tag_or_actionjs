@@ -1,5 +1,6 @@
 "use client"
 import { del } from '@/app/(pages)/(public)/data/action';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import { MdEditDocument } from "react-icons/md";
@@ -15,6 +16,8 @@ export default function StudentData({ id }) {
         try {
             const res = await del(id)
             const data = JSON.parse(res)
+            console.log(data);
+            
             if (!data.success) throw new Error(data.message)
             toast.success(data.message)
             router.refresh()
@@ -26,7 +29,7 @@ export default function StudentData({ id }) {
 
     return (
         <div className='w-22 text-xl text-center capitalize text-white flex justify-center items-center gap-2 '>
-            <MdOutlinePageview className='text-white cursor-pointer hover:scale-110 transition-all duration-150 ease-linear' />
+            <Link href={`/data/${id}`} ><MdOutlinePageview className='text-white cursor-pointer hover:scale-110 transition-all duration-150 ease-linear' /></Link>
             <MdEditDocument className='text-blue-500 cursor-pointer hover:scale-110 transition-all duration-150 ease-linear' />
             <MdDelete className='cursor-pointer hover:scale-110 transition-all duration-150 ease-linear text-red-500' onClick={() => handleDel(id)} />
         </div>
