@@ -6,6 +6,7 @@ import { RiAlarmWarningLine } from "react-icons/ri";
 
 import StudentData from '@/component/StudentData';
 import StudentAddBtn from '@/component/StudentAddBtn';
+import { AuthOption } from '@/app/api/auth/[...nextauth]/route';
 
 export const metadata = {
   title: "CRUD Operation | action.js "
@@ -14,8 +15,8 @@ export default async function page() {
 
   await ConnectDB()
   const std = await Student.find({}) || []
-  const session = await getServerSession()
-  
+  const session = await getServerSession(AuthOption)
+
   if (!session) return <div className='w-full min-h-screen bg-purple-700 pt-12  px-10 ' >
     <p className='text-center text-4xl tracking-[2px] mt-15 font-bold '>Students Data</p>
     <div className='w-full h-12 bg-white mt-10 rounded-xl flex items-center font-normal justify-between px-5'>
@@ -30,7 +31,7 @@ export default async function page() {
     <p className='text-center mt-5 text-2xl text-white/50 '>Authentication Required</p>
   </div>
 
-return (
+  return (
     <div className='w-full min-h-screen bg-purple-700 pt-12  px-10'>
       <p className='text-center text-4xl tracking-[2px] mt-15 font-bold '>Students Data</p>
       <div className='w-full h-12 bg-white mt-10 rounded-xl flex items-center font-normal justify-between px-5'>
@@ -62,7 +63,8 @@ return (
         }
 
       </div>
-      <StudentAddBtn />
+      {session.user.role === "admin" && (<StudentAddBtn />)}
+
     </div>
   )
 }

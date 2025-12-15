@@ -3,6 +3,7 @@ import "./globals.css";
 import MainWrapper from "@/context/MainWrapper";
 import { getServerSession } from "next-auth";
 import ToastProvider from "@/component/ToastProvider";
+import { AuthOption } from "./api/auth/[...nextauth]/route";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +24,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession()
+  const session = await getServerSession( AuthOption )
   return (
     <html lang="en">
       <body

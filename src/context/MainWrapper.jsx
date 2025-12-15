@@ -8,7 +8,7 @@ export default function MainWrapper({ children, session }) {
     return (
         <SessionProvider session={session}>
             <AppProvider>
-               
+
                 {children}
             </AppProvider>
         </SessionProvider>

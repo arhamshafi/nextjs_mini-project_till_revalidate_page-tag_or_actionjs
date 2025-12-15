@@ -1,11 +1,15 @@
 "use server"
 
+import { AuthOption } from "@/app/api/auth/[...nextauth]/route"
 import ConnectDB from "@/lib/mongo"
 import Student from "@/model/student"
 import mongoose from "mongoose"
+import { getServerSession } from "next-auth"
 
 
 export const del = async (id) => {
+    const session = await getServerSession(AuthOption)
+    if (session.user.role !== "admin") throw new Error("Only Admin Actions")
     try {
         await ConnectDB()
         const objId = new mongoose.Types.ObjectId(id)
@@ -16,5 +20,25 @@ export const del = async (id) => {
         return JSON.stringify({ success: true, message: "Successfully Delete" })
     } catch (err) {
         return JSON.stringify({ success: false, message: err.message || "Invalid Error" })
+    }
+}
+
+export const add = async (data) => {
+    const session = await getServerSession(AuthOption)
+    if (session.user.role !== "admin") throw new Error("Only Admin Actions")
+    try {
+        await ConnectDB()
+
+        const res = await Student.create({
+            name: data.name,
+            class: data.clas,
+            age: data.age,
+            gender: data.gender,
+            city: data.city
+        })
+        return JSON.stringify({ success: true, message: "Successfully Created" })
+
+    } catch (err) {
+        return JSON.stringify({ sucess: false, message: err.message || "Server Error" })
     }
 }
