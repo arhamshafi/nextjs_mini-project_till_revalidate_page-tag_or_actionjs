@@ -10,6 +10,8 @@ import { getServerSession } from "next-auth"
 export const del = async (id) => {
     try {
         const session = await getServerSession(AuthOption)
+        
+        
         if (session?.user?.role !== "admin") throw new Error("Only Admin Actions")
         await ConnectDB()
         const objId = new mongoose.Types.ObjectId(id)

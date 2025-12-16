@@ -1,7 +1,9 @@
 import ConnectDB from "@/lib/mongo";
 import User from "@/model/user";
 import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { signIn } from "next-auth/react";
 
 
 export const AuthOption = {
@@ -24,7 +26,12 @@ export const AuthOption = {
                     throw new Error(err.message || "Authentication Error")
                 }
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
+
     ],
 
     session: {
@@ -35,6 +42,28 @@ export const AuthOption = {
     jwt: { maxAge: 60 * 60 },
 
     callbacks: {
+
+        async signIn({ user, account, profile }) {
+            await ConnectDB();
+            // console.log("profile detilas////" , profile);
+
+            if (account.provider === "google") {
+                const existingUser = await User.findOne({ email: user.email });
+
+                if (!existingUser) {
+                    await User.create({
+                        name: user.name,
+                        email: user.email,
+                        image: profile?.picture || "",
+                        provider: account.provider,
+                        providerId: account.providerAccountId
+                    });
+                }
+            }
+            return true;
+        },
+
+
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;

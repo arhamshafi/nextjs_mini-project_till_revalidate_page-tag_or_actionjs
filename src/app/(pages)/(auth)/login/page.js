@@ -70,7 +70,7 @@ export default function page() {
                 <button className='w-full h-12 bg-black/90 cursor-pointer active:bg-black/80 text-white mt-5 rounded-2xl' disabled={loader}> {loader ? (<div className='w-5 h-5 border-white border-b-2 border-l-2 rounded-full mx-auto animate-spin '></div>) : "Sign in"}</button>
                 <p className='text-md text-black/85 mt-5 w-max mx-auto '>Don't have an account? <span className='text-blue-400 font-bold ml-2 hover:underline cursor-pointer' onClick={() => router.push("/signup")} >Sign up</span> </p>
                 <div className='w-full h-max flex justify-between items-center mt-5  '>
-                    <button type='button' disabled={loader} className='w-[48%] h-12 border border-black/20 rounded-xl cursor-pointer hover:bg-gray-50 flex justify-center items-center gap-3 text-black/85' onClick={() => toast.info("Feature Will Active Soon ")} > <FcGoogle className='text-2xl -ml-2 ' /> <span>Google</span> </button>
+                    <button type='button' disabled={loader} className='w-[48%] h-12 border border-black/20 rounded-xl cursor-pointer hover:bg-gray-50 flex justify-center items-center gap-3 text-black/85' onClick={() => signIn("google", { callbackUrl: "/" })} ><FcGoogle className='text-2xl -ml-2 ' /> <span>Google</span></button>
                     <button type='button' disabled={loader} className='w-[48%] h-12 border border-black/20 rounded-xl cursor-pointer hover:bg-gray-50 flex justify-center items-center gap-3 text-black/85' onClick={() => toast.info("Feature Will Active Soon ")} > <FaApple className='text-2xl -ml-2' /> <span>Apple</span> </button>
                 </div>
             </form>

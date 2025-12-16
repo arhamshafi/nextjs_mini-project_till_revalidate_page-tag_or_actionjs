@@ -34,7 +34,6 @@ async function seed() {
     await ConnectDB();
     await Student.deleteMany();
     await Student.insertMany(students);
-    console.log("Students added successfully ✅");
     process.exit();
 }
 

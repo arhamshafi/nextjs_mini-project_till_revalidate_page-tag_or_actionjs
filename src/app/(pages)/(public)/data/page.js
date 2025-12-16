@@ -17,6 +17,7 @@ export default async function page() {
   const std = await Student.find({}) || []
   const session = await getServerSession(AuthOption)
 
+
   if (!session) return <div className='w-full min-h-screen bg-purple-700 pt-12  px-10 ' >
     <p className='text-center text-4xl tracking-[2px] mt-15 font-bold '>Students Data</p>
     <div className='w-full h-12 bg-white mt-10 rounded-xl flex items-center font-normal justify-between px-5'>

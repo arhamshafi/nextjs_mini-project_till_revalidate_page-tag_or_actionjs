@@ -15,10 +15,12 @@ const UserSchema = new mongoose.Schema({
         lowercase: true,
         trim: true,
     },
-
+    image: {
+        type: String,
+        default: ""
+    },
     password: {
         type: String,
-        required: [true, "Password Must Be Required"],
         minlength: [6, "Password Must Be 6 Digit"],
         select: false,
     },
@@ -28,7 +30,15 @@ const UserSchema = new mongoose.Schema({
         default: "user",
         enum: ["admin", "user"],
     },
-
+    provider: {
+        type: String,
+        default: "credentials",
+    },
+    providerId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -44,7 +54,7 @@ UserSchema.pre("save", async function () {
 });
 
 UserSchema.methods.comparePassword = async function (pass) {
-  return bcrypt.compare(pass, this.password);
+    return bcrypt.compare(pass, this.password);
 };
 
 
