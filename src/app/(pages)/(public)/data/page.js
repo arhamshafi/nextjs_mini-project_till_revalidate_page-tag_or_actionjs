@@ -16,6 +16,8 @@ export default async function page() {
   await ConnectDB()
   const std = await Student.find({}) || []
   const session = await getServerSession(AuthOption)
+  // console.log(session);
+  
 
 
   if (!session) return <div className='w-full min-h-screen bg-purple-700 pt-12  px-10 ' >

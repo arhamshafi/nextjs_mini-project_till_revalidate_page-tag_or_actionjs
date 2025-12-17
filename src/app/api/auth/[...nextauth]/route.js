@@ -44,6 +44,8 @@ export const AuthOption = {
     callbacks: {
 
         async signIn({ user, account, profile }) {
+            console.log(user, '/// user');
+
             await ConnectDB();
             // console.log("profile detilas////" , profile);
 
@@ -63,13 +65,20 @@ export const AuthOption = {
             return true;
         },
 
-
         async jwt({ token, user }) {
+
             if (user) {
                 token.id = user.id;
-                token.role = user.role;
                 token.name = user.name;
                 token.email = user.email;
+                token.role = user.role
+
+                if (!user.role) {
+                    await ConnectDB()
+                    const dbUser = await User.findOne({ email: user.email })
+                    token.id = dbUser._id;
+                    token.role = dbUser.role
+                }
             }
             return token
         },
@@ -80,6 +89,8 @@ export const AuthOption = {
                 session.user.name = token.name;
                 session.user.email = token.email;
             }
+
+
             return session
         }
     },
